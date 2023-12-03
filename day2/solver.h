@@ -9,7 +9,10 @@ struct NextPosAndValue {
   int value;
 };
 
+int *generateEmptyCubeBag();
 int *generateBaseCubeBag();
+int bagPower(int *bag);
+void compareBags(int *maxBag, int *curBag);
 struct NextPosAndValue getNextPosAndGameId(char *problemLine);
 struct NextPosAndValue readNumber(char *problemLine, int index);
 void solve(char *filename, int solveLine(char *line));

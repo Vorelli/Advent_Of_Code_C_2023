@@ -1,4 +1,4 @@
-#include "part1.h"
+#include "part2.h"
 #include <stdio.h>
 
 int main(int argc, char **argv) {
@@ -11,27 +11,29 @@ int main(int argc, char **argv) {
 }
 
 int solveLine(char *problemLine) {
-  struct NextPosAndValue gameIdAndPos = getNextPosAndGameId(problemLine);
-  int *bag = generateBaseCubeBag();
-
-  for (unsigned long i = gameIdAndPos.nextPos; i < strlen(problemLine); i++) {
+  int *maxBag = generateEmptyCubeBag();
+  int *curBag = generateEmptyCubeBag();
+  struct NextPosAndValue nextPosAndGameId = getNextPosAndGameId(problemLine);
+  for (unsigned long i = nextPosAndGameId.nextPos; i < strlen(problemLine);
+       i++) {
     if (problemLine[i] >= '0' && problemLine[i] <= '9') {
       struct NextPosAndValue result = readNumber(problemLine, i);
       i = result.nextPos + 1;
       int color = problemLine[i] == 'r' ? 0 : problemLine[i] == 'g' ? 2 : 1;
-      bag[color] -= result.value;
+      curBag[color] += result.value;
+      i += color + 3;
     }
+
     if (problemLine[i] == ',')
       i++;
+
     if (problemLine[i] == ';') {
+      compareBags(maxBag, curBag);
       i++;
-      if (anyFalse(bag))
-        return 0;
-      free(bag);
-      bag = generateBaseCubeBag();
+      curBag = generateEmptyCubeBag();
     }
   }
-  printf("Final line %d results: red: %d blue: %d green: %d\n",
-         gameIdAndPos.value, bag[0], bag[1], bag[2]);
-  return anyFalse(bag) ? 0 : gameIdAndPos.value;
+  compareBags(maxBag, curBag);
+  free(curBag);
+  return bagPower(maxBag);
 }

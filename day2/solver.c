@@ -1,28 +1,51 @@
 #include "solver.h"
 
-int *generateBaseCubeBag() {
+int *generateBag() {
   int *genericBag;
   genericBag = malloc(sizeof(int) * 3);
+  return genericBag;
+}
+
+int *generateEmptyCubeBag() {
+  int *genericBag = generateBag();
+  for (int i = 0; i < 3; i++)
+    genericBag[i] = 0;
+  return genericBag;
+}
+
+int *generateBaseCubeBag() {
+  int *genericBag = generateBag();
   genericBag[0] = 12;
   genericBag[1] = 14;
   genericBag[2] = 13;
   return genericBag;
 }
 
+int bagPower(int *bag) {
+  int res = bag[0] * bag[1] * bag[2];
+  printf("Bag power: %d\n", res);
+  return res;
+}
+void compareBags(int *maxBag, int *curBag) {
+  for (unsigned long i = 0; i < sizeof(curBag); i++) {
+    if (curBag[i] > maxBag[i])
+      maxBag[i] = curBag[i];
+  }
+}
+
 void solve(char *filename, int solveLine(char *line)) {
   FILE *problem = getFile(filename);
   char line[BUFSIZ];
-  int sum = 0;
+  long long sum = 0;
   while (fgets(line, BUFSIZ, problem) != NULL) {
     sum += solveLine(line);
-    printf("Sum after line %s: %d\n", line, sum);
+    printf("Sum after Game %d: %lld\n", getNextPosAndGameId(line).value, sum);
   }
-  printf("Solution to part one: %d\n", sum);
+  printf("Solution: %lld\n", sum);
 }
 
 struct NextPosAndValue getNextPosAndGameId(char *problemLine) {
   for (unsigned long i = 0; i < strlen(problemLine); i++) {
-    printf("Scanning @ position: %lu with value of: %d\n", i, problemLine[i]);
     if (problemLine[i] >= '0' && problemLine[i] <= '9') {
       return readNumber(problemLine, i);
     }
@@ -36,26 +59,19 @@ bool anyFalse(int *bagArr) {
     if (bagArr[i] < 0)
       return true;
   }
-  printf("NONE FALSE!\n");
   return false;
 }
 
 struct NextPosAndValue readNumber(char *problemLine, int index) {
-  problemLine[strlen(problemLine) - 1] = 0x00;
-  char substr[BUFSIZ];
-  strncpy(substr, problemLine + index, BUFSIZ);
-  printf("Reading %s\n", substr);
+  problemLine[strlen(problemLine)] = 0x00;
   char numToBe[BUFSIZ] = {0};
   unsigned long lastPos;
   for (lastPos = (unsigned long)index; lastPos < strlen(problemLine);
        lastPos++) {
     if (problemLine[lastPos] == ' ' || problemLine[lastPos] == ':')
       break;
-    printf("char: %c setting position %lu to char\n", problemLine[lastPos],
-           lastPos);
     numToBe[lastPos - index] = problemLine[lastPos];
   }
-  printf("numToBeFirstThree: %c%c%c\n", numToBe[0], numToBe[1], numToBe[2]);
   int quantity = atoi(numToBe);
   if (quantity == 0) {
     printf("num is equal to 0. probably error... index: %d ", index);
