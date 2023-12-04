@@ -61,26 +61,3 @@ bool anyFalse(int *bagArr) {
   }
   return false;
 }
-
-struct NextPosAndValue readNumber(char *problemLine, int index) {
-  problemLine[strlen(problemLine)] = 0x00;
-  char numToBe[BUFSIZ] = {0};
-  unsigned long lastPos;
-  for (lastPos = (unsigned long)index; lastPos < strlen(problemLine);
-       lastPos++) {
-    if (problemLine[lastPos] == ' ' || problemLine[lastPos] == ':')
-      break;
-    numToBe[lastPos - index] = problemLine[lastPos];
-  }
-  int quantity = atoi(numToBe);
-  if (quantity == 0) {
-    printf("num is equal to 0. probably error... index: %d ", index);
-    printf("next 10: ");
-    for (int i = 0; i < 10; i++) {
-      printf("%c", problemLine[i]);
-    }
-    printf("\n");
-  }
-  struct NextPosAndValue n = {lastPos, quantity};
-  return n;
-}

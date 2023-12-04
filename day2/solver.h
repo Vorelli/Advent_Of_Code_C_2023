@@ -4,11 +4,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-struct NextPosAndValue {
-  int nextPos;
-  int value;
-};
-
 int *generateEmptyCubeBag();
 int *generateBaseCubeBag();
 int bagPower(int *bag);
