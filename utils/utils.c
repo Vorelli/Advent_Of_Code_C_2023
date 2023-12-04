@@ -73,3 +73,21 @@ bool isNumber(char ch) { return ch >= '0' && ch <= '9'; }
 bool isSymbol(char **problem, unsigned long r, unsigned long c) {
   return problem[r][c] != '.' && !isNumber(problem[r][c]);
 }
+
+struct NextPosAndIntPtr readNextNumbersUntil(char *line, int index,
+                                             char until) {
+  int *listOfNumbers = malloc(NUM_MATCHING * sizeof(int));
+  int num = 0;
+  unsigned long i;
+  for (i = index; num < NUM_MATCHING && line[i] != '\0'; i++) {
+    if (line[i] == until)
+      break;
+    if (isNumber(line[i])) {
+      struct NextPosAndValue res = readNumber(line, i);
+      i = res.nextPos - 1;
+      listOfNumbers[num++] = res.value;
+    }
+  }
+  struct NextPosAndIntPtr res = {i, listOfNumbers};
+  return res;
+}

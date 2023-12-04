@@ -2,10 +2,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#define NUM_MATCHING 100
 
 struct NextPosAndValue {
   int nextPos;
   int value;
+};
+struct NextPosAndIntPtr {
+  int nextPos;
+  int *val;
 };
 struct ArrayAndDims {
   char **array;
@@ -24,3 +29,4 @@ int max(int a, int b);
 bool isNumber(char ch);
 bool isSymbol(char **problem, unsigned long r, unsigned long c);
 bool isNumberOrIsNegative(char **problem, unsigned long r, unsigned long c);
+struct NextPosAndIntPtr readNextNumbersUntil(char *line, int index, char until);
