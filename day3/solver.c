@@ -1,4 +1,5 @@
 #include "solver.h"
+#include <stdio.h>
 
 struct valueAndNextPos readNumAndIsTouchingSymbol(char **allLines, int row,
                                                   int col, int numRow,
@@ -27,10 +28,61 @@ struct valueAndNextPos readNumAndIsTouchingSymbol(char **allLines, int row,
 int getNumRows(char **problem) {
   int i = 0;
   for (; problem[i][0] != '\0'; i++) {
-    printf("%c\n", problem[i][0]);
   };
-  printf("\n");
   return i;
+}
+
+void solveAndPrintSolution2(char *fileName) {
+  FILE *f = fopen(fileName, "r");
+  struct ArrayAndDims resultF = readFileIntoArray(f);
+  char **fileInArrayFormat = resultF.array;
+  long long res =
+      findAllGears(fileInArrayFormat, resultF.numRow, resultF.numCol);
+  printf("Result for part two: %lld\n", res);
+  fclose(f);
+}
+
+long long findAllGears(char **grid, unsigned long numRows,
+                       unsigned long numCols) {
+  long long res = 0;
+
+  for (unsigned long i = 0; i < numRows; i++) {
+    for (unsigned long j = 0; j < numCols; j++) {
+      if (grid[i][j] != '*')
+        continue;
+      int *surrounding = surroundedByTwoNumbers(grid, i, j, numRows, numCols);
+      if (surrounding != NULL &&
+          !(surrounding[0] == 0 && surrounding[1] == 0)) {
+        res += (surrounding[0] * surrounding[1]);
+      }
+      free(surrounding);
+    }
+  }
+  return res;
+}
+
+int *surroundedByTwoNumbers(char **grid, unsigned long row, unsigned long col,
+                            unsigned long numRow, unsigned long numCol) {
+  int startingR = max(0, row - 1);
+  int startingC = max(0, col - 1);
+  int numNumbers = 0;
+  int *res = malloc(sizeof(int) * 2);
+  for (int r = startingR;
+       r < min(numRow, row == 0 ? startingR + 2 : startingR + 3); r++) {
+    for (int c = startingC; c < min(numCol - 1, col + 2); c++) {
+      if (isNumber(grid[r][c])) {
+        int num = findBeginningAndReadNumber(grid[r], c);
+        res[numNumbers++] = num;
+        if (numNumbers > 2)
+          break;
+        if (isNumber(grid[r][min(numCol - 1, c + 1)]))
+          break; // move on to next row
+      }
+    }
+    if (numNumbers >= 2)
+      break;
+  }
+  return numNumbers == 2 ? res : NULL;
 }
 
 void solveAndPrintSolution1(char *fileName) {
@@ -56,13 +108,8 @@ void solveAndPrintSolution1(char *fileName) {
 }
 
 int calculateStartingR(int r, int length) {
-  // printf("R: %d length: %d\n", r, length);
   r--;
-  // printf("less than r: %s\n", r < 0 ? "true" : "false");
-  // printf("greater than or equal to length: %s\n",
-  // r >= length ? "true" : "false");
   int end = r < 0 ? 0 : (r >= length ? length - 1 : r);
-  // printf("startingR Calculated: %d\n", end);
   return end;
 }
 int calculateStartingC(int c, int length) {

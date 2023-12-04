@@ -33,6 +33,14 @@ unsigned long fileSize(FILE *f) {
   return size;
 }
 
+int findBeginningAndReadNumber(char *problemLine, int index) {
+  for (int i = index; i >= 0; i--) {
+    if (!isNumber(problemLine[i]))
+      return readNumber(problemLine, i + 1).value;
+  }
+  return readNumber(problemLine, 0).value;
+}
+
 struct NextPosAndValue readNumber(char *problemLine, int index) {
   // problemLine[strlen(problemLine)] = 0x00;
   char numToBe[BUFSIZ] = {0};
