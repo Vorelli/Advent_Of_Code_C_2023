@@ -1,0 +1,48 @@
+#+title: AoC Day 8
+* Part 1
+** Notes
+*** We start at a node (AAA) which can be labeled by any three characters. Our objective is to follow the instruction given (L for left, R for right) as many repeats as it takes to find the node ZZZ.
+**** Each node points to a left node and a right node.
+** Cases
+*** Case 1
+**** Given:
+#+NAME: Example 1
+#+BEGIN_SRC <text>
+RL
+
+AAA = (BBB, CCC)
+BBB = (DDD, EEE)
+CCC = (ZZZ, GGG)
+DDD = (ZZZ, GGG)
+EEE = (EEE, EEE)
+GGG = (GGG, GGG)
+ZZZ = (ZZZ, ZZZ)
+#+END_SRC
+**** Return: 2
+***** AAA -> R (CCC) -> L (ZZZ) Found ZZZ after 2 steps
+*** Case 2
+**** Given:
+#+NAME: Example 2
+#+BEGIN_SRC <text>
+LLR
+
+AAA = (BBB, BBB)
+BBB = (AAA, ZZZ)
+ZZZ = (ZZZ, ZZZ)
+#+END_SRC
+**** Return: 6
+***** AAA -> L (BBB) -> L (AAA) -> R (BBB) -> L (AAA) -> L (BBB) -> R (ZZZ) Found ZZZ after 6 steps
+*** Case x
+**** Given:
+#+NAME: Example x
+#+BEGIN_SRC <text>
+#+END_SRC
+**** Return: x
+
+** Ideas
+*** Parse nodes into "node-like" structures and hold them within a map. Each look up will be O(1) and then it's all about repeating the instructions over and over.
+** Tasks
+*** TODO Create Hash Map in C
+*** TODO Write parsing algorithm for instruction
+*** TODO Write parsing algorithm for nodes
+*** TODO Tie it all together
