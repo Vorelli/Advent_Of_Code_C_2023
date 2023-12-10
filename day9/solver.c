@@ -3,13 +3,13 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
-long long getSolutionForLine(char *problemLine) {
+long long getSolutionForLine(char *problemLine, bool toTheRight) {
   long long *sequence = loadLineIntoSequence(problemLine);
-  long long sol = solutionGen(sequence);
+  long long sol = solutionGen(sequence, toTheRight);
   return sol;
 }
 
-long long solutionGen(long long *sequence) {
+long long solutionGen(long long *sequence, bool toTheRight) {
   long long *diff = malloc(sizeof(long long) * MAX_ELEMENTS);
   for (int i = 0; i < MAX_ELEMENTS; i++) {
     diff[i] = LLONG_MAX;
@@ -17,22 +17,22 @@ long long solutionGen(long long *sequence) {
   bool allZeros = true;
 
   // printf("FIRST ELEMENT OF SEQUENCE: %llu\n", sequence[0]);
-  long long last = 0;
+  long long last = sequence[0];
   for (int i = 1; sequence[i] != LLONG_MAX; i++) {
     diff[i - 1] = sequence[i] - sequence[i - 1];
     // printf("Diff current: %lld\n", diff[i - 1]);
     if (diff[i - 1] != 0)
       allZeros = false;
-    last = sequence[i];
+    if (toTheRight)
+      last = sequence[i];
   }
   if (allZeros) {
     return last;
   }
-  long long nextInSeq = solutionGen(diff);
+  long long nextInSeq = solutionGen(diff, toTheRight);
   // printf("FOUND SOLUTION OF DIFF: %lld SUM: %lld\n", nextInSeq, last);
   free(diff);
-  printf("%lld\n", nextInSeq + last);
-  return nextInSeq + last;
+  return last - nextInSeq;
 }
 
 long long *loadLineIntoSequence(char *problemLine) {

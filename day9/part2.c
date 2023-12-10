@@ -11,7 +11,7 @@ int main(int argc, char **argv) {
   fclose(f);
   unsigned long sol = 0;
   for (int i = 0; i < fileContents.numRow; i++) {
-    long long nextInSeq = getSolutionForLine(fileContents.array[i], true);
+    long long nextInSeq = getSolutionForLine(fileContents.array[i], false);
     printf("Found solution for line #%d: %lld total: %lu\n", i, nextInSeq, sol);
     sol += nextInSeq;
   }

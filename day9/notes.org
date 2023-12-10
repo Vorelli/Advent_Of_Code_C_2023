@@ -28,3 +28,4 @@ CLOSED: [2023-12-10 Sun 00:02]
 ***** otherwise, return received + previous element in array
 * Part 2
 ** Tasks
+*** Extrapolate backwards instead of forwards.
