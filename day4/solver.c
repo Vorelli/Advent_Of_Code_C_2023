@@ -2,7 +2,7 @@
 
 void solveAndPrintSolution1(char *fileName, int solveLine(char *line)) {
   FILE *f = fopen(fileName, "r");
-  struct ArrayAndDims fileInArrayFormat = readFileIntoArray(f);
+  ArrayAndDims fileInArrayFormat = readFileIntoArray(f);
   unsigned long long totalPoints = 0;
   for (int i = 0; i < fileInArrayFormat.numRow; i++) {
     totalPoints += solveLine(fileInArrayFormat.array[i]);
@@ -13,7 +13,7 @@ void solveAndPrintSolution1(char *fileName, int solveLine(char *line)) {
 
 void solveAndPrintSolution2(char *fileName, int solveLine(char *line)) {
   FILE *f = fopen(fileName, "r");
-  struct ArrayAndDims fileInArrayFormat = readFileIntoArray(f);
+  ArrayAndDims fileInArrayFormat = readFileIntoArray(f);
   unsigned long long totalCards = 0;
   int numCards[fileInArrayFormat.numRow];
   memset(numCards, 0, sizeof(int) * fileInArrayFormat.numRow);

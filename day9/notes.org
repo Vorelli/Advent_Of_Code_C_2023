@@ -1,0 +1,30 @@
+#+title: AoC Day 9
+* Part 1
+** Notes
+*** Looks pretty straightforward. Recursively process lines to find their next element.
+*** Only return if the next simulation returns 0. Then return the previous value.
+*** Above that, we just add the previoius element to the returned number.
+** Cases
+*** Case x
+**** Given:
+#+NAME: Example x
+#+BEGIN_SRC <text>
+0 3 6 9 12 15 -> 18
+1 3 6 10 15 21 -> 28
+10 13 16 21 30 45 -> 68
+#+END_SRC
+**** Return: 114 ( SUM OF ALL NEXT NODES )
+** Ideas
+** Tasks
+*** Write function for next element in sequence (char *)
+**** Parses all numbers in the sequence into an array (long[])
+**** Feeds into recursive function
+*** Recursive Function
+**** DONE Generates diff array (an array of size - 2) which contains differences between elements
+CLOSED: [2023-12-10 Sun 00:02]
+**** DONE Follow rules above
+CLOSED: [2023-12-10 Sun 00:02]
+***** return if all 0
+***** otherwise, return received + previous element in array
+* Part 2
+** Tasks
