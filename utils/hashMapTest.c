@@ -6,7 +6,7 @@ void shouldHandleUpToMaxElements(HashMap h) {
   for (unsigned long i = 0; i < MAX_BUCKETS; i++) {
     char str[BUFSIZ];
     sprintf(str, "%lu", i);
-    assert(NULL == set(h, str, createNode(str, NULL, NULL)));
+    assert(NULL == set(h, str, createNode(h, str, NULL, NULL)));
   }
 }
 
@@ -15,15 +15,15 @@ void shouldReturnSameValue(HashMap h) {
   char *b = "b";
   char *c = "c";
 
-  set(h, a, createNode(a, NULL, NULL));
-  set(h, b, createNode(b, NULL, NULL));
-  set(h, c, createNode(c, NULL, NULL));
-  assert(get(h, a)->value[0] == a[0]);
-  assert(get(h, b)->value[0] == b[0]);
-  assert(get(h, c)->value[0] == c[0]);
+  set(h, a, createNode(h, a, NULL, NULL));
+  set(h, b, createNode(h, b, NULL, NULL));
+  set(h, c, createNode(h, c, NULL, NULL));
+  assert(getNode(h, a)->value[0] == a[0]);
+  assert(getNode(h, b)->value[0] == b[0]);
+  assert(getNode(h, c)->value[0] == c[0]);
 }
 
-void randomR(HashMap h) { get(h, "a"); }
+void randomR(HashMap h) { getNode(h, "a"); }
 
 int main() {
   int numFunctions = 3;

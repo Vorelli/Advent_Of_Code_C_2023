@@ -3,9 +3,9 @@
 #include <stdio.h>
 
 void shouldReturnExpectedValue() {
-  HashMap h = create();
+  HashMap *h = create();
   parseNodes("AAA = (BBB, CCC)", h);
-  Node *n = get(h, "AAA");
+  Node *n = getNode(h, "AAA");
   assert(n != NULL);
   assert(strcmp(n->value, "AAA") == 0);
   assert(strcmp(n->left->value, "BBB") == 0);

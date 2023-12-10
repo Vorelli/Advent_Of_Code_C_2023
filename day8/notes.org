@@ -42,7 +42,19 @@ ZZZ = (ZZZ, ZZZ)
 ** Ideas
 *** Parse nodes into "node-like" structures and hold them within a map. Each look up will be O(1) and then it's all about repeating the instructions over and over.
 ** Tasks
-*** TODO Create Hash Map in C
-*** TODO Write parsing algorithm for instruction
-*** TODO Write parsing algorithm for nodes
-*** TODO Tie it all together
+*** DONE Create Hash Map in C
+CLOSED: [2023-12-08 Fri 19:51]
+*** DONE Write parsing algorithm for instruction
+CLOSED: [2023-12-09 Sat 01:12]
+*** DONE Write parsing algorithm for nodes
+CLOSED: [2023-12-09 Sat 01:12]
+*** DONE Tie it all together
+CLOSED: [2023-12-09 Sat 01:12]
+* Part 2
+** Tasks
+*** DONE Create function to find all nodes ending with a letter
+CLOSED: [2023-12-09 Sat 01:14]
+**** DONE Will need to keep track of keys because of this
+CLOSED: [2023-12-09 Sat 01:14]
+*** DONE Simulate each turn until every beginning node (ending with an A) ends up pointing to a node ending with a Z.
+CLOSED: [2023-12-09 Sat 20:23]
